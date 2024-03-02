@@ -14,13 +14,15 @@ router.post('/users/login', async (req, res) => {
 })
 
 router.post('/users', async (req, res) => {
+    console.log(req.body);
     const user = new User(req.body);
     try {
         const token = await user.generateAuthToken()
         res.status(201);
+        console.log(user);
         res.send({ user, token });
     } catch (e) {
-        res.status(501);
+        console.log(e.message);
         res.send(e);
     }
 })

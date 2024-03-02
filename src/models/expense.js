@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Expense = mongoose.model('Expense', {
+const expenseSchema = new mongoose.Schema({
     title: {
         type: String,
         trim: true,
@@ -20,12 +20,20 @@ const Expense = mongoose.model('Expense', {
         type: String,
         trim: true
     },
+    paid: {
+        type: Boolean,
+        default: true
+    },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
     }
+}, {
+    timestamps: true
 })
+
+const Expense = mongoose.model('Expense', expenseSchema);
 
 
 

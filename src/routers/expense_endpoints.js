@@ -4,13 +4,27 @@ const auth = require('../middleware/auth')
 const Expense = require('../models/expense');
 // const User = require('../models/user');
 
+// /expense?paid=true/false
+// /expense?limit=10&skip=10
+
 router.get('/expense', auth, async (req, res) => {
+    const match = {}
+    if (req.query.paid) {
+        match.paid = req.query.paid === 'true';
+    }
     try {
-        const expense = await Expense.find({ owner: req.user._id })
+        // const expense = await Expense.find({ owner: req.user._id })
         // const user = await User.findById(req.user._id);
-        // await user.populate('userExpenses')
+        await req.user.populate({
+            path: 'userExpenses',
+            match,
+            options: {
+                limit: parseInt(req.query.limit),
+                skip: parseInt(req.query.skip)
+            }
+        })
         // console.log(user.userExpenses);
-        res.send(expense);
+        res.send(req.user.userExpenses);
 
     } catch (e) {
         res.status(501).send();
@@ -48,7 +62,7 @@ router.get('/expense/:id', auth, async (req, res) => {
 
 router.post('/expense/find', auth, async (req, res) => {
     const updates = Object.keys(req.body);
-    const availableUpdates = ['price', 'description', 'title'];
+    const availableUpdates = ['price', 'description', 'title', 'paid'];
     const canUpdate = updates.every((update) => availableUpdates.includes(update));
     if (!canUpdate) res.status(501).send("unavailable search");
     else {
@@ -72,7 +86,7 @@ router.patch('/expense/:id', auth, async (req, res) => {
     if (!canUpdate) res.status(501).send("mismatched key names");
     else {
         try {
-            const expense = await Expense.findOne(req.params._id);
+            const expense = await Expense.findOne({ owner: req.user._id, _id: req.params.id });
 
             // const expense = await Expense.findById(req.params.id);
             if (!expense) res.status(404).send("no expense found");
