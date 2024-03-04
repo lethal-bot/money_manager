@@ -6,11 +6,18 @@ const Expense = require('../models/expense');
 
 // /expense?paid=true/false
 // /expense?limit=10&skip=10
+// /expense?sortBy=createdAt_asc/desc
 
 router.get('/expense', auth, async (req, res) => {
     const match = {}
+    const sort = {}
     if (req.query.paid) {
         match.paid = req.query.paid === 'true';
+    }
+
+    if (req.query.sortBy) {
+        const parts = req.query.sortBy.split('_')
+        sort[parts[0]] = parts[1] === 'desc' ? -1 : 1;
     }
     try {
         // const expense = await Expense.find({ owner: req.user._id })
@@ -20,7 +27,8 @@ router.get('/expense', auth, async (req, res) => {
             match,
             options: {
                 limit: parseInt(req.query.limit),
-                skip: parseInt(req.query.skip)
+                skip: parseInt(req.query.skip),
+                sort
             }
         })
         // console.log(user.userExpenses);
