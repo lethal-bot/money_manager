@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 require('./src/db/mongoose.js')
@@ -9,7 +10,7 @@ app.set("trust proxy", 1);
 app.use(
     cors({
         origin: "*", // Replace with the actual origin of your frontend application
-        allowedHeaders: ["Authorization", "Content-Type"], // Add 'Authorization' to the list of allowed headers
+        allowedHeaders: ["Authorization", "Content-Type", "type"], // Add 'Authorization' to the list of allowed headers
     })
 );
 

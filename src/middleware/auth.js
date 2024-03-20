@@ -11,6 +11,7 @@ const auth = async (req, res, next) => {
             throw new Error();
         }
         // console.log(req);
+        if (!user.isVerified) return req.status(401).send({ "message": "not validated" })
         req.token = token
         req.user = user
         next();
