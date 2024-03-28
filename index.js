@@ -18,8 +18,8 @@ app.use(express.json())
 app.use(userRouter);
 app.use(expenseRouter);
 
-app.listen(3000, () => {
-    console.log('server is up on the port 3000')
+app.listen(process.env.PORT, () => {
+    console.log(`server is up on the port ${process.env.PORT}`)
 })
 
 //relating two models

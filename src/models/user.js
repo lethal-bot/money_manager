@@ -50,11 +50,15 @@ const userSchema = new mongoose.Schema({
     otp: {
         type: String,
         default: undefined
-    }
+    },
 
-}, {
-    timestamps: true
-})
+
+
+},
+    {
+        timestamps: true
+    }
+)
 
 userSchema.virtual('userExpenses', {
     ref: 'Expense',
