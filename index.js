@@ -9,8 +9,8 @@ app.set("trust proxy", 1);
 
 app.use(
     cors({
-        origin: "*", // Replace with the actual origin of your frontend application
-        allowedHeaders: ["Authorization", "Content-Type", "type"], // Add 'Authorization' to the list of allowed headers
+        origin: "*",
+        allowedHeaders: ["Authorization", "Content-Type", "type"],
     })
 );
 
@@ -22,38 +22,5 @@ app.listen(process.env.PORT, () => {
     console.log(`server is up on the port ${process.env.PORT}`)
 })
 
-//relating two models
-// const Expense = require('./src/models/expense.js')
-// const User = require('./src/models/user.js')
 
-// const main = async () => {
-//     const user = await User.findById('65da44e3efac7d2c5b4e967f');
-//     await user.populate('userExpenses')
-//     console.log(user.userExpenses)
-// }
-
-// main()
-
-// const bcrypt = require('bcryptjs')
-
-// const myFunction = async () => {
-//     const password = 'Red12345!'
-//     const hashedPassword = await bcrypt.hash(password, 8);
-//     console.log(password, hashedPassword);
-
-//     const isMatch = await bcrypt.compare('Red12345!', hashedPassword);
-//     console.log(isMatch);
-// }
-
-// const jwt = require('jsonwebtoken')
-
-// const myFunction = async () => {
-//     const token = jwt.sign({ _id: 'abc' }, 'thisismynewcourse', { expiresIn: '2 seconds' });
-//     console.log(token)
-
-//     const data = jwt.verify(token, 'thisismynewcourse');
-//     console.log(data);
-// }
-
-// myFunction();
 

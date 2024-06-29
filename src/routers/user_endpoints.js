@@ -19,7 +19,7 @@ router.post('/users/login', async (req, res) => {
 })
 
 router.post('/users', async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     const generateOtp = () => Math.floor(1000 + Math.random() * 9000);
     try {
         const user = await new User(req.body);
