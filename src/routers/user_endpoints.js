@@ -12,7 +12,7 @@ router.post('/users/login', async (req, res) => {
         const user = await User.findByCredentials(req.body.email, req.body.password);
         if (!user.isVerified) return res.status(401).send({ message: "not verified" });
         const token = await user.generateAuthToken()
-        res.send({ user, token })
+        res.status(200).send({ user, token })
     } catch (e) {
         res.status(400).send(e);
     }
